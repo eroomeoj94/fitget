@@ -1,3 +1,4 @@
+import { FitbitService } from './services/fitbit.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { OAuthModule } from 'angular-oauth2-oidc';
@@ -28,12 +29,12 @@ import { RouterModule } from '@angular/router';
       component: HomeComponent
     }, {
       path: '',
-      redirectTo: '/home',
+      redirectTo: '/login',
       pathMatch: 'full'
     }
     ])
   ],
-  providers: [],
+  providers: [FitbitService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

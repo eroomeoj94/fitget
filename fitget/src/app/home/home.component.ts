@@ -1,4 +1,6 @@
+import { FitbitService } from './../services/fitbit.service';
 import { Component, OnInit } from '@angular/core';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  code:string;
+
+  constructor(private activatedRoute: ActivatedRoute,private fitbitService:FitbitService) { }
 
   ngOnInit() {
+    this.activatedRoute.params.subscribe((params: Params) => {
+        this.code = params['code'];
+      });
+  }
+
+  getActivities(){
+    var test = this.fitbitService.getActivities(this.code).subscribe();
   }
 
 }
