@@ -1,6 +1,6 @@
 import { FitbitService } from './../services/fitbit.service';
 import { Component, OnInit } from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,18 +9,34 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  code:string;
+  accessToken: string;
+  userId: string;
+  result: any;
 
-  constructor(private activatedRoute: ActivatedRoute,private fitbitService:FitbitService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private fitbitService: FitbitService) { }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe((params: Params) => {
-        this.code = params['code'];
-      });
+    let routeFragment = this.activatedRoute.fragment.map(fragment => fragment);
+
+    routeFragment.subscribe(fragment => {
+      let tokenString = fragment.match(/^(.*?)&/);
+      if (tokenString) {
+        this.accessToken = tokenString[1].replace('access_token=', '');
+        localStorage.setItem('accessToken',this.accessToken);
+      }
+      let userIdString = fragment.match(/id=(.*?)&/);
+      if(userIdString){
+          this.userId = userIdString[1].replace('user_id=','');
+        localStorage.setItem('userId',this.userId);
+      }
+    });
   }
 
-  getActivities(){
-    var test = this.fitbitService.getActivities(this.code).subscribe();
+  getActivities() {
+    this.fitbitService.getActivities(this.userId, this.accessToken).subscribe(activities => {
+      this.result = activities
+    });
   }
-
 }

@@ -7,20 +7,19 @@ import 'rxjs/add/operator/map';
  
 @Injectable()
 export class FitbitService {
- testCode = '4K5GVK';
   constructor (private http: Http) {}
  
-  getActivities(code:string): Observable<any[]> {
+  getActivities(userId:string, accessToken:string): Observable<any> {
     let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0SzVHVksiLCJhdWQiOiIyMjhHRloiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJzZXQgcmFjdCBybG9jIHJ3ZWkgcmhyIHJudXQgcnBybyByc2xlIiwiZXhwIjoxNDk5OTc3Nzc4LCJpYXQiOjE0OTkzNzM1MTh9.RDH5HmjOOzr7dEXmZHOcQiTbpTEDHctqC_TyrWYDvYc')
+    headers.append('Authorization', 'Bearer ' + accessToken)
     
-    return this.http.get('https://api.fitbit.com/1/user/'+this.testCode+'/activities.json',{headers:headers})
+    return this.http.get('https://api.fitbit.com/1/user/'+userId+'/activities.json',{headers:headers})
                     .map(this.extractData)
                     .catch(this.handleError);
   }
   private extractData(res: Response) {
     let body = res.json();
-    return body.data || { };
+    return body || { };
   }
  
   private handleError (error: Response | any) {

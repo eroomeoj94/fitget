@@ -1,3 +1,6 @@
 <button class="btn btn-default" (click)="getActivities()">
     Activities
 </button>
+<div *ngIf="result">
+{{result.best.total.distance.value}}
+</div>
