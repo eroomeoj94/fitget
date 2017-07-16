@@ -4,8 +4,8 @@ import { NgModule } from '@angular/core';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { AppComponent } from './app.component';
 import { HttpModule } from '@angular/http';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
 import { RouterModule } from '@angular/router';
 
 

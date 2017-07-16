@@ -1,5 +1,6 @@
+import { Activities } from './../models/activities';
 import { Injectable } from '@angular/core';
-import { Http, Response ,Headers}          from '@angular/http';
+import { Http, Response ,Headers} from '@angular/http';
  
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -9,17 +10,13 @@ import 'rxjs/add/operator/map';
 export class FitbitService {
   constructor (private http: Http) {}
  
-  getActivities(userId:string, accessToken:string): Observable<any> {
+  getActivities(userId:string, accessToken:string): Observable<Activities> {
     let headers: Headers = new Headers();
     headers.append('Authorization', 'Bearer ' + accessToken)
     
     return this.http.get('https://api.fitbit.com/1/user/'+userId+'/activities.json',{headers:headers})
-                    .map(this.extractData)
+                    .map(data => data.json() as Activities)
                     .catch(this.handleError);
-  }
-  private extractData(res: Response) {
-    let body = res.json();
-    return body || { };
   }
  
   private handleError (error: Response | any) {
