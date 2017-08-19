@@ -1,6 +1,7 @@
-<button class="btn btn-default" (click)="getActivities()">
-    Activities
-</button>
+
 <div *ngIf="result">
-{{result.best.total.distance.value}}
+<h2>Lifetime</h2>
+Distance: {{result.lifetime.total.distance}} Miles<br/>
+Steps: {{result.lifetime.total.steps}} Steps<br/>
+Floors: {{result.lifetime.total.floors}} Floors
 </div>
